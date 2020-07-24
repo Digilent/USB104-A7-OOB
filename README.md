@@ -11,42 +11,42 @@ The UART controller used within the demo requires that the connected serial term
 ## Requirements
 
 * Digilent USB104 A7
-* Xilinx SDK 2019.1 and a Vivado 2019.1 installation, see the [Installing Vivado, Xilinx SDK, and Digilent Board Files](https://reference.digilentinc.com/vivado/installing-vivado/start) guide on the Digilent Wiki for instructions
+* Vivado and Vitis 2020.1 Installations: To set up Vivado, see the [Installing Vivado and Digilent Board Files Tutorial](https://reference.digilentinc.com/learn/programmable-logic/tutorials/2020.1/installation).
 * Serial Terminal application (such as Tera Term or PuTTY)
 * MicroUSB Cable
 
-## Demo Setup
+## Demo Setup (v2020.1-1)
 
 
-*This section is a step by step guide from downloading the release to programming the board and running the demo. There are two flows, one describes how to run the demo from downloaded sources, while the other describes booting the demo from SPI Flash.*
+**Note**: *Other releases may require other steps be taken to use them. Make sure to check the version of this README found in the commit associated with that release's tag for instructions*.
 
 ### From a Release
 
-1. Download the most recent release ZIP archive ("USB104-A7-OOB-2019.1-*.zip") from the repo's [releases page](https://github.com/Digilent/USB104-A7-OOB/releases).
+1. Download the most recent release ZIP archives from the repo's [releases page](https://github.com/Digilent/USB104-A7-OOB/releases). These files are called "USB104-A7-OOB-hw-2020.1-1.zip" and "USB104-A7-OOB-sw-2020.1-1.zip". The -hw- archive contains an exported XPR project file and associated sources for use with Vivado. The -sw- archive contains exported project files for use with Vitis. Both of these files contain the build products of the associated tool.
 
-2. Extract the downloaded ZIP.
+2. Extract the downloaded -hw- archive. (Do not extract the -sw- archive)
 
-3. Open the XPR project file, found at \<archive extracted location\>/vivado_proj/USB104-A7-OOB.xpr, included in the extracted release archive in Vivado 2019.1.
+3. Open Vivado 2020.1.
 
-4. Launch Xilinx SDK directly (not through the Vivado file menu). When prompted for a workspace, select "\<archive extracted location\>/sdk_workspace".
+4. Open the XPR project file, found at <archive extracted location>/hw/hw.xpr, included in the extracted hardware release in Vivado 2020.1.
 
-5. Once the workspace opens, click the **Import** button. In the resulting dialog, first select *Existing Projects into Workspace*, then click **Next**. Navigate to and select the same sdk_workspace folder.
+5. No additional steps are required within Vivado. The project can be viewed, modified, and rebuilt, and a new platform can be exported, as desired.
 
-6. Build the project. **Note**: *Errors are sometimes seen at this step. These are typically resolved by right-clicking on the BSP project and selecting Regenerate BSP Sources.*
+6. Open Vitis 2020.1. Choose an empty folder as the *Workspace* to launch into.
 
-*Here is where hardware setup should be described, for example:*
+7. With Vitis opened, click the **Import Project** button, under **PROJECT** in the welcome screen.
 
-7. Open a serial terminal application (such as [TeraTerm](https://ttssh2.osdn.jp/index.html.en) and connect it to the USB104 A7's serial port, using a baud rate of 9600.
+8. Choose *Vitis project exported zip file* as the Import type, then click **Next**.
 
-8. In the toolbar at the top of the SDK window, select *Xilinx -> Program FPGA*. Leave all fields as their defaults and click "Program".
+9. **Browse** for the downloaded -sw- archive, and **Open** it.
 
-9. In the Project Explorer pane, right click on the "\<APP NAME\>" application project and select "Run As -> Launch on Hardware (System Debugger)".
+10. Make sure that all boxes are checked in order to import each of the projects present in the archive will be imported, then click **Finish**.
 
-10. The application will now be running on the USB104-A7. It can be interacted with as described in the first section of this README.
+11. Connect the USB104 A7 to your computer via the MicroUSB programming cable.
 
-11. Lastly, the hardware platform must be linked to a hardware handoff, so that changes to the Vivado design can be brought into the SDK workspace. In Vivado, in the toolbar at the top of the window, select *File -> Export -> Export Hardware*. Any Exported Location will do, but make sure to remember the selection, and make sure that the **Include bitstream** box is checked. Click **OK**.
+12. Open a serial terminal application (such as TeraTerm or PuTTY) and connect it to the USB104 A7's serial port, using a baud rate of 9600.
 
-12. In SDK, right click on the \*_hw_platform_\* project, and select *Change Hardware Platform Specification*. Click **Yes** in response to the warning. In the resulting dialog, navigate to and select the .hdf hardware handoff file exported in the previous step, then click **OK**. Now, whenever a modified design is exported from Vivado, on top of the .hdf file, it can be applied to the hardware platform.
+13. In the *Assistant* pane at the bottom left of the Vitis window, right click on the project marked [System], and select **Run -> Launch Hardware**. When the demo is finished launching, messages will be able to be seen through the serial terminal, and the buttons can be used as described in this document's Description section, above.
 
 ###From Flash
 
@@ -56,12 +56,12 @@ Assuming that the SPI Flash has not been overwritten, the demo can be booted by 
 
 *This section is primarily used to link to useful resources*
 
-This demo can be used as a basis for other projects by modifying the hardware platform in the Vivado project's block design or by modifying the SDK application project.
+This demo can be used as a basis for other projects by modifying the hardware platform in the Vivado project's block design or by modifying the Vitis application project.
 
 Check out the USB104 A7's [Resource Center](https://reference.digilentinc.com/reference/programmable-logic/usb104-a7/start) to find more documentation, demos, and tutorials.
 
-For technical support or questions, please post on the [Digilent Forum](forum.digilentinc.com).
+For technical support or questions, please post on the [Digilent Forum](https://forum.digilentinc.com/).
 
 ## Additional Notes
 
-For more information on how this project is version controlled, refer to the [digilent-vivado-scripts repo](https://github.com/digilent/digilent-vivado-scripts).
+For more information on how this project is version controlled, refer to the [digilent-vivado-scripts](https://github.com/digilent/digilent-vivado-scripts) and [digilent-vitis-scripts](https://github.com/Digilent/digilent-vitis-scripts) repositories.
